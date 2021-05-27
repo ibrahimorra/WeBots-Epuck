@@ -12,7 +12,7 @@
 #define LEDS 10
 #define nr_caixas 9
 #define TIME_STEP 64
-#define MAX_SPEED 10
+#define MAX_SPEED 6.28
 
 static const char* pos_led[LEDS] = { "led0", "led1", "led2", "led3", "led4","led5", "led6", "led7", "led8", "led9" };
 const char sensores_robo[8][4] = { "ps0", "ps1", "ps2", "ps3","ps4", "ps5", "ps6", "ps7" };
