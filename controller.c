@@ -25,8 +25,8 @@ double** mapa(int linha, int coluna);
 void objetoDetectado(bool detectado, WbFieldRef* caixa_def, double** caixa_posicao, WbDeviceTag* leds);
 // Movimentação do Robo
 static void movimento();
-// Aguardar para o proximo movimento
-static void aguardar(double tempo);
+// Função Sleep
+static void wait(double tempo);
 // Definir Velocidade do Robo
 typedef struct sensor_obstaculos{
   bool direita;
@@ -126,7 +126,7 @@ static void movimento() {
     }
 }
 
-static void aguardar(double tempo) {
+static void wait(double tempo) {
     double start_time = wb_robot_get_time();
     do {
         movimento();
@@ -134,15 +134,15 @@ static void aguardar(double tempo) {
 }
 
 void velRobo(sensor_obstaculos* obstaculo, WbDeviceTag* motor_esquerdo, WbDeviceTag* motor_direito){
-  double vel_esquerda  = MAX_SPEED;
-  double vel_direita = MAX_SPEED;
+  double vel_esquerda  = 0.5 * MAX_SPEED;
+  double vel_direita = 0.5 * MAX_SPEED;
   
    if (obstaculo->esquerda) {
-      vel_esquerda  += MAX_SPEED;
-      vel_direita -= MAX_SPEED;
+      vel_esquerda  += 0.5 * MAX_SPEED;
+      vel_direita -= 0.5 * MAX_SPEED;
    }else if (obstaculo->direita) {
-      vel_esquerda  -= MAX_SPEED;
-      vel_direita += MAX_SPEED;
+      vel_esquerda  -= 0.5 * MAX_SPEED;
+      vel_direita += 0.5 * MAX_SPEED;
    }
    
    wb_motor_set_velocity(*motor_esquerdo, vel_esquerda);
@@ -230,12 +230,10 @@ void Leds(WbDeviceTag* leds){
 void ativarLed(WbDeviceTag* leds) {
   for (int i = 0; i < LEDS; i++)
     wb_led_set(leds[i], true);
-  aguardar(0.5);
+  wait(0.5);
 }
 
 void defineLed(WbDeviceTag* leds) {
   for (int i = 0; i < LEDS; i++)
     wb_led_set(leds[i], false);
 }
-
-
